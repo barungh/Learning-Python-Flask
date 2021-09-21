@@ -1,32 +1,34 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request
+from datetime import datetime # this is required to show date and time
 
 app = Flask(__name__)
 
-
-def add(a, b):
-    return a + b
+def peri(l, b):
+    perimeter = 2*(l+b)
+    return perimeter
 
 @app.route('/')
-def home():
-    return 'There is nothing here, <br> contact server admin for API Doc'
+def hello():
+    return '<h1>Welcome to the land of Legends of Python</h1>'
 
-@app.route('/api', methods=['GET'])
-def api_home():
-    return "<h5>API Documentation</h5>"
+# this is 'localhost/about' route
+@app.route('/about')
+def greet():
+    return f'We are legend of Python'
 
-@app.route('/api/calc', methods=['POST', 'GET'])
+# and this , 'localhost/checktime' route
+@app.route('/checktime')
+def check_time():
+    current_date_time = datetime.now()
+    result = current_date_time.strftime("%d-%m-%Y %H:%M:%S")
+    return f'Current date and time is {result}'
+
+@app.route('/calc', methods=['POST', 'GET'])
 def calc():
     a = request.args.get('a', '')
     b = request.args.get('b', '')
-    print("Value of a")
-    print(a)
-    print("Value of b")
-    print(b)
     a = int(a)
     b = int(b)
-    result = add(a, b)
-    print(result)
-    return f'<h3>Sum {str(result)}</h3>' 
-    
-
+    result = peri(a, b)
+    result = str(result)
+    return result
