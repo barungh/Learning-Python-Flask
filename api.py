@@ -1,5 +1,5 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request
+from datetime import datetime 
 
 app = Flask(__name__)
 
@@ -9,11 +9,17 @@ def add(a, b):
 
 @app.route('/')
 def home():
-    return 'There is nothing here, <br> contact server admin for API Doc'
+    return '<h1>Welcome to the land of Legends of Python</h1>'
 
 @app.route('/api', methods=['GET'])
 def api_home():
     return "<h5>API Documentation</h5>"
+
+@app.route('/checktime')
+def check_time():
+    current_date_time = datetime.now()
+    result = current_date_time.strftime("%d-%m-%Y %H:%M:%S")
+    return f'Current date and time is {result}'
 
 @app.route('/api/calc', methods=['POST', 'GET'])
 def calc():
